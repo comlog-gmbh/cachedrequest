@@ -1,0 +1,21 @@
+{
+  "name": "cachedrequest",
+  "version": "1.1.0",
+  "description": "Cache addon for node's popular request module",
+  "main": "cachedrequest.js",
+  "scripts": {
+    "test": "node test/test.js"
+  },
+  "keywords": [
+    "cache",
+    "request",
+    "http",
+    "https"
+  ],
+  "dependencies": {
+    "request": ">=2.45.0"
+  },
+  "author": "COMLOG GmbH",
+  "license": "ISC",
+  "repository" : "https://github.com/comlog-gmbh/cachedrequest.git"
+}
