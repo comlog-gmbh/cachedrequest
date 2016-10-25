@@ -3,6 +3,12 @@
  */
 
 var req = require('../');
+req.clearCache(function (errors, success) {
+    req.get.cached('http://test.speedorder.local/js/jquery-3.1475578826.min.js', function (err, res) {
+        console.info(arguments);
+    });
+});
+
 /*var start = (new Date()).getTime();
 console.info('Start cached:'+start);
 for(var i=0; i < 100; i++) {
@@ -19,7 +25,7 @@ for(var i=0; i < 100; i++) {
     });
 }*/
 
-req.cached.clear(function (errors, success) {
+/*req.clearCache(function (errors, success) {
     console.info(success);
     console.error(errors);
-});
+});/**/

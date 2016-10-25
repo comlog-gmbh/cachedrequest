@@ -28,8 +28,8 @@ request.cached('http://www.comlog.org', function(err, response, body) {
 #### Clear cache:
 ```javascript
 var request = require('cachedrequest');
-request.setCacheDirectory('/my/path/to/cache/folder');
-request.cached.clear(function(errors, removed) {
+request.setCacheDirectory('/my/path/to/cache/folder'); // if not standard
+request.clearCache(function(errors, removed) {
     console.error(errors);
     console.info(removed);
 });
