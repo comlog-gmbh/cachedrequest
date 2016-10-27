@@ -4,7 +4,7 @@
 
 var req = require('../');
 req.clearCache(function (errors, success) {
-    req.get.cached('http://test.speedorder.local/js/jquery-3.1475578826.min.js', function (err, res) {
+    req.post.cached({uri:'http://test.speedorder.local/js/jquery-3.1475578826.min.js', formData: {test:'test'}}, function (err, res) {
         console.info(arguments);
     });
 });

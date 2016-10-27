@@ -12,9 +12,10 @@ var
     prefix = 'cr_';
 
 module.exports = function(request) {
+
     var uriToCachePath = function(uri) {
         var md5sum = _crypto.createHash('md5');
-        md5sum.update(uri);
+        md5sum.update(uri && uri.uri ? uri.uri : (uri && uri.url ? uri.url : uri));
         return _path.normalize(cacheDirectory + _path.sep + prefix + md5sum.digest('hex') + '.json');
     }
 
@@ -102,11 +103,7 @@ module.exports = function(request) {
     };
 
     var _apply = function (method, uri, options, callback) {
-        if (typeof callback == 'undefined') {
-            callback = options;
-            options = {};
-        }
-
+        var cb = callback || options;
         //if (!options.headers) options.headers = {};
         //options.headers['Cache-Control'] = 'max-age=0';
         readCache(uri, function(data) {
@@ -114,18 +111,18 @@ module.exports = function(request) {
                 var f = !method ? request : request[method];
                 var r = f(uri, options, function (err, response, body) {
                     if (err)
-                        callback(err, response);
+                        cb(err, response);
                     else
                         saveCache(uri, response, function (err2, cacheFile) {
                             console.info(cacheFile);
-                            callback(err2, response);
+                            cb(err2, response);
                         });
                 });
             } else {
-                callback(null, data, data.body);
+                cb(null, data, data.body);
             }
         });
-    }
+    };
 
     /**
      * Send cached request
