@@ -1,4 +1,4 @@
-# Sync version of Request
+# Cached request version
 
 Allow you send cached requests. Depends on "request" module https://github.com/request/request/.
 No extra configuration needed.
