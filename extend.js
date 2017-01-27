@@ -130,12 +130,12 @@ module.exports = function(request) {
      * @param {object|Function} options settings or Calback function
      * @param {Function} [callback]
      */
-    request.cached = function (uri, options, callback) { return _apply(null, uri, options, callback); };
-    request.get.cached = function (uri, options, callback) { return _apply('get', uri, options, callback); };
-    request.post.cached = function (uri, options, callback) { return _apply('post', uri, options, callback); };
-    request.put.cached = function (uri, options, callback) { return _apply('put', uri, options, callback); };
-    request.patch.cached = function (uri, options, callback) { return _apply('patch', uri, options, callback); };
-    request.del.cached = function (uri, options, callback) { return _apply('del', uri, options, callback); };
+    if (!request.cached) request.cached = function (uri, options, callback) { return _apply(null, uri, options, callback); };
+    if (!request.get.cached) request.get.cached = function (uri, options, callback) { return _apply('get', uri, options, callback); };
+    if (!request.post.cached) request.post.cached = function (uri, options, callback) { return _apply('post', uri, options, callback); };
+    if (!request.put.cached) request.put.cached = function (uri, options, callback) { return _apply('put', uri, options, callback); };
+    if (!request.patch.cached) request.patch.cached = function (uri, options, callback) { return _apply('patch', uri, options, callback); };
+    if (!request.del.cached) request.del.cached = function (uri, options, callback) { return _apply('del', uri, options, callback); };
 
     /**
      * Remove all cache data
