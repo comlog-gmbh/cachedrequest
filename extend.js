@@ -175,11 +175,15 @@ module.exports = function(request) {
                         _fs.unlink(cacheDirectory+_path.sep+file, function (err) {
                             if (err) errors.push(cacheDirectory+_path.sep+file);
                             else success.push(cacheDirectory+_path.sep+file);
-                            handleFiles(files, hcb);
+							process.nextTick(function () {
+								handleFiles(files, hcb);
+							});
                         });
                     }
                     else {
-                        handleFiles(files, hcb);
+						process.nextTick(function () {
+							handleFiles(files, hcb);
+						});
                     }
                 }
                 else {
