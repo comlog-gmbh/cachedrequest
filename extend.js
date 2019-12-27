@@ -199,6 +199,46 @@ module.exports = function(request) {
         });
     };
 
+    /**
+     * Remove all cache data
+     * @param {Function} cb
+     */
+    request.resetCache = function (cb) {
+        var errors = [],
+            success = [],
+            handleFiles = function(files, hcb) {
+                if (files && files.length > 0) {
+                    var file = files.shift();
+                    if (file.substr(0, prefix.length) == prefix && file.substr(file.length - 4) == 'json') {
+                        //var zero = Date.parse('01 Jan 1970 00:00:00 GMT');
+                        var zero = new Date('2000-01-01T00:00:00');
+                        _fs.utimes(cacheDirectory+_path.sep+file, zero, zero, function (err) {
+                            if (err) errors.push(cacheDirectory+_path.sep+file);
+                            else success.push(cacheDirectory+_path.sep+file);
+                            process.nextTick(function () {
+                                handleFiles(files, hcb);
+                            });
+                        });
+                    }
+                    else {
+                        process.nextTick(function () {
+                            handleFiles(files, hcb);
+                        });
+                    }
+                }
+                else {
+                    cb(errors.length > 0 ? errors : null, success);
+                }
+            };
+
+        _fs.readdir(cacheDirectory, function (err, files) {
+            if (err) cb(err);
+            else {
+                handleFiles(files, cb);
+            }
+        });
+    };
+
     request.setCacheDirectory = function(dir) {
         cacheDirectory = dir;
     };
